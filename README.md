@@ -1,29 +1,29 @@
-# 📰 Projeto de Notícias Dinâmicas
+# 📰 Dynamic News Project
 
-Uma aplicação web simples e funcional para buscar notícias em tempo real, focada em conteúdo em português.
+A simple and functional web application for searching news in real-time, focused on content in Portuguese.
 
-## 🚀 Funcionalidades
+## 🚀 Features
 
-* **Busca em Tempo Real**: Pesquise por qualquer assunto e receba resultados atualizados.
-* **Filtro de Idioma**: Busca otimizada para trazer apenas notícias em português.
-* **Limite de Resultados**: Exibição organizada dos 20 principais resultados por pesquisa.
-* **UX Aprimorada**:
-    * Não recarrega a página ao pesquisar.
-    * Funciona tanto com o clique no botão quanto pressionando "Enter".
-    * Mensagem amigável caso nenhum resultado seja encontrado.
-    * Histórico do navegador desativado no campo de busca.
+* **Real-Time Search**: Search for any topic and receive updated results.
+* **Language Filter**: Optimized search to bring only news in Portuguese.
+* **Results Limit**: Organized display of the top 20 results per search.
+* **Enhanced UX**:
+    * Does not reload the page when searching.
+    * Works both with a button click and by pressing "Enter".
+    * Friendly message if no results are found.
+    * Browser history disabled in the search field.
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Technologies Used
 
-* **HTML5**: Estruturação da página.
-* **CSS3**: Estilização dos cards e layout.
-* **JavaScript (Vanilla)**: Manipulação do DOM e consumo da API de notícias.
-* **NewsAPI**: Fonte dos dados de notícias.
+* **HTML5**: Page structure.
+* **CSS3**: Card styling and layout.
+* **JavaScript (Vanilla)**: DOM manipulation and news API consumption.
+* **NewsAPI**: News data source.
 
-## 🛠️ Como Executar o Projeto
+## 🛠️ How to Run the Project
 
-1.  Clone este repositório:
+1.  Clone this repository:
     ```bash
     git clone [https://github.com/rolynryck-byte/Noticias.git](https://github.com/rolynryck-byte/Noticias.git)
     ```
-2.  Abra o arquivo `index.html` no seu navegador.
+2.  Open the `index.html` file in your browser.
