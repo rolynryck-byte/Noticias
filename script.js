@@ -1,64 +1,99 @@
-const botaoP = document.querySelector("#botao-pesquisa");
-const pesquisaInput = document.getElementById("search-input");
-const container = document.querySelector(".news-container");
+/**
+ * 📰 PROJECT: NEWS APPLICATION
+ * Description: Fetches real-time news using GNews API and a CORS Anywhere Proxy.
+ */
 
-// CHAVE GNEWS QUE VOCÊ PASSOU
-const apiKey = "4d339ba55cd0c1703ad4a417a954ae07";
-// A estrutura da URL precisa ser da GNews
-let Api = `https://gnews.io/api/v4/search?q=world&lang=en&token=${apiKey}`;
+// --- 1. DOM ELEMENTS SELECTION ---
+const searchButton = document.querySelector("#botao-pesquisa");
+const searchInput = document.getElementById("search-input");
+const newsContainer = document.querySelector(".news-container");
 
-// Busca inicial
-buscarNoticias(Api);
+// --- 2. API CONFIGURATION ---
+const API_KEY = "4d339ba55cd0c1703ad4a417a954ae07";
+// Using CORS Anywhere Proxy to bypass security restrictions in production (GitHub Pages)
+const PROXY = "https://cors-anywhere.herokuapp.com/";
+const BASE_URL = "https://gnews.io/api/v4/search";
 
-// --- FUNÇÃO DE PESQUISA REESTRUTURADA ---
-function buscarNoticias(urlApi) {
-  fetch(urlApi)
-    .then((resposta) => resposta.json())
-    .then((dados) => {
-      // GNews usa 'articles'
-      if (!dados.articles || dados.articles.length === 0) {
-        container.innerHTML = `<p>No news found for "${pesquisaInput.value}" in English.</p>`;
+// Initial URL: Search for "world" news in English
+const initialUrl = `${PROXY}${BASE_URL}?q=world&lang=en&token=${API_KEY}`;
+
+// --- 3. INITIALIZATION ---
+// Fetch initial news when the page loads
+fetchNews(initialUrl);
+
+// --- 4. MAIN FUNCTIONS ---
+
+/**
+ * Makes the request to the API and manages the response
+ * @param {string} apiUrl - The full API URL to fetch data from
+ */
+function fetchNews(apiUrl) {
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      // Checks if the API returned articles
+      if (!data.articles || data.articles.length === 0) {
+        newsContainer.innerHTML = `<p>No news found for "${searchInput.value}" in English.</p>`;
       } else {
-        desenharCard(dados.articles);
+        renderCards(data.articles);
       }
     })
-    .catch((erro) => console.error("Erro na API:", erro));
+    .catch((error) => {
+      console.error("API Request Error:", error);
+      newsContainer.innerHTML = `<p>Error loading news. Please try again later.</p>`;
+    });
 }
 
-function desenharCard(noticias) {
-  container.innerHTML = "";
-  const noticiasLimitadas = noticias.slice(0, 20);
+/**
+ * Creates and inserts news cards into the HTML
+ * @param {Array} newsList - List of articles received from the API
+ */
+function renderCards(newsList) {
+  // Clear the container before adding new cards
+  newsContainer.innerHTML = "";
+  
+  // Limit display to the first 20 results
+  const limitedNews = newsList.slice(0, 20);
 
-  noticiasLimitadas.forEach((noticia) => {
+  limitedNews.forEach((news) => {
     const card = document.createElement("div");
     card.classList.add("news-card");
 
-    // ATENÇÃO: GNews usa 'image', não 'urlToImage'
+    // HTML Structure of the Card (GNews API specific fields)
     card.innerHTML = `
-      <img src="${noticia.image}" alt="News Image" />
+      <img src="${news.image}" alt="News Image" onerror="this.src='placeholder.jpg'" />
       <div class="card-content">
-        <h3>${noticia.title}</h3>
-        <p>${noticia.description}</p>
-        <a href="${noticia.url}" target="_blank" class="read-more">Read More</a>
-      </div>`;
-    container.appendChild(card);
+        <h3>${news.title}</h3>
+        <p>${news.description}</p>
+        <a href="${news.url}" target="_blank" class="read-more">Read More</a>
+      </div>
+    `;
+    newsContainer.appendChild(card);
   });
 }
 
-// --- EVENTOS ---
+// --- 5. EVENTS (USER INTERACTION) ---
 
-botaoP.addEventListener("click", function (event) {
-  event.preventDefault();
-  const termo = pesquisaInput.value;
-  if (!termo) return;
+// Helper function to process the search
+function handleSearch() {
+  const query = searchInput.value;
+  if (!query) return; // Do nothing if input is empty
 
-  const novaApi = `https://gnews.io/api/v4/search?q=${termo}&lang=en&token=${apiKey}`;
-  buscarNoticias(novaApi);
+  // New search URL with the typed query
+  const searchUrl = `${PROXY}${BASE_URL}?q=${query}&lang=en&token=${API_KEY}`;
+  fetchNews(searchUrl);
+}
+
+// Click on Search Button
+searchButton.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevents form submission
+  handleSearch();
 });
 
-pesquisaInput.addEventListener("keydown", function (event) {
+// "Enter" Key on Search Input
+searchInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     event.preventDefault();
-    botaoP.click();
+    handleSearch();
   }
 });
