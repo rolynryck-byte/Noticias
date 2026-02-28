@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noticias</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="cabecalho">
+      <h1>Notícias Agora</h1>
+      <div id="search-form" class="caixa-pesquisa">
+        <input
+          type="text"
+          placeholder="Quer ver Quais Noticias?"
+          aria-label="Campo de Pesquisa"
+          id="search-input"
+          autocomplete="off"
+        />
+        <button
+          type="button"
+          id="botao-pesquisa"
+          aria-label="Botão de Pesquisa"
+        >
+          🔍
+        </button>
+      </div>
+    </header>
+
+    <section class="news-container">
+      <div class="news-card">
+        <img src="https://picsum.photos/300/200" alt="Imagem da notícia" />
+        <div class="card-content">
+          <h3>Título da Notícia Exemplo</h3>
+          <p>
+            Um breve resumo da notícia vai aqui para o usuário saber do que se
+            trata...
+          </p>
+          <a href="#" target="_blank" class="read-more">Leia na fonte</a>
+        </div>
+      </div>
+    </section>
+    <script src="script.js"></script>
+  </body>
+</html>
