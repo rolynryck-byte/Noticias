@@ -9,12 +9,14 @@ const searchInput = document.getElementById("search-input");
 const newsContainer = document.querySelector(".news-container");
 
 // --- 2. API CONFIGURATION ---
+// --- 2. CONFIGURAÇÃO DA API ---
 const API_KEY = "4d339ba55cd0c1703ad4a417a954ae07";
-// Removed PROXY to try direct connection
+// Novo proxy para evitar bloqueio de CORS
+const PROXY = "https://api.allorigins.win/raw?url=";
 const BASE_URL = "https://gnews.io/api/v4/search";
 
-// Initial URL: Search for "world" news in English
-const initialUrl = `${BASE_URL}?q=world&lang=en&token=${API_KEY}`;
+// URL Inicial com codificação correta para o proxy
+const initialUrl = `${PROXY}${encodeURIComponent(`${BASE_URL}?q=world&lang=en&token=${API_KEY}`)}`;
 
 // --- 3. INITIALIZATION ---
 fetchNews(initialUrl);
@@ -80,3 +82,4 @@ searchInput.addEventListener("keydown", function (event) {
     handleSearch();
   }
 });
+
