@@ -12,7 +12,7 @@ const API_KEY = "2YOZXDn-rk4Aifxd4s5JOT4HQSGxCGuuOSRx9nGo8TdeqC0F";
 const BASE_URL = "https://api.currentsapi.services/v1/search";
 
 // Initial URL: Search for "technology" news in English
-const initialUrl = `${BASE_URL}?keywords=technology&language=en&apiKey=${API_KEY}`;
+const initialUrl = `${BASE_URL}?keywords=technology&language=br&apiKey=${API_KEY}`;
 
 // --- 3. INITIALIZATION ---
 fetchNews(initialUrl);
@@ -94,3 +94,4 @@ searchInput.addEventListener("keydown", function (event) {
     handleSearch();
   }
 });
+
