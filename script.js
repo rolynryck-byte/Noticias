@@ -2,9 +2,10 @@ const botaoP = document.querySelector("#botao-pesquisa");
 const pesquisaInput = document.getElementById("search-input");
 const container = document.querySelector(".news-container");
 
-// API KEY ATUALIZADA, HTTPS E IDIOMA EM INGLÊS
+// CHAVE GNEWS QUE VOCÊ PASSOU
 const apiKey = "4d339ba55cd0c1703ad4a417a954ae07";
-let Api = `https://newsapi.org/v2/everything?q=world&language=en&apiKey=${apiKey}`;
+// A estrutura da URL precisa ser da GNews
+let Api = `https://gnews.io/api/v4/search?q=world&lang=en&token=${apiKey}`;
 
 // Busca inicial
 buscarNoticias(Api);
@@ -14,7 +15,8 @@ function buscarNoticias(urlApi) {
   fetch(urlApi)
     .then((resposta) => resposta.json())
     .then((dados) => {
-      if (dados.articles.length === 0) {
+      // GNews usa 'articles'
+      if (!dados.articles || dados.articles.length === 0) {
         container.innerHTML = `<p>No news found for "${pesquisaInput.value}" in English.</p>`;
       } else {
         desenharCard(dados.articles);
@@ -31,8 +33,9 @@ function desenharCard(noticias) {
     const card = document.createElement("div");
     card.classList.add("news-card");
 
+    // ATENÇÃO: GNews usa 'image', não 'urlToImage'
     card.innerHTML = `
-      <img src="${noticia.urlToImage}" alt="News Image" />
+      <img src="${noticia.image}" alt="News Image" />
       <div class="card-content">
         <h3>${noticia.title}</h3>
         <p>${noticia.description}</p>
@@ -44,18 +47,15 @@ function desenharCard(noticias) {
 
 // --- EVENTOS ---
 
-// Clique do Botão
 botaoP.addEventListener("click", function (event) {
   event.preventDefault();
   const termo = pesquisaInput.value;
   if (!termo) return;
 
-  // Nova busca mantendo o idioma inglês
-  const novaApi = `https://newsapi.org/v2/everything?q=${termo}&language=en&apiKey=${apiKey}`;
+  const novaApi = `https://gnews.io/api/v4/search?q=${termo}&lang=en&token=${apiKey}`;
   buscarNoticias(novaApi);
 });
 
-// Tecla Enter no Input
 pesquisaInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     event.preventDefault();
